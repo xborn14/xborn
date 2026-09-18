@@ -1,3 +1,4 @@
 # 自检产物与临时文件
 _shots/
+_backup/
 *.py
