@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陈屿 · 全栈开发者</title>
-<meta name="description" content="陈屿的个人主页——全栈开发者，专注 Web 产品从想法到上线的全过程。">
+<title>袁智勇 · 微电子科学与技术</title>
+<meta name="description" content="袁智勇的个人主页——微电子科学与技术专业在读，具备扎实的半导体物理与集成电路设计基础。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%231C2024'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='7'%20fill='%233F9E8A'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='2.6'%20fill='%23F6F7F5'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
@@ -44,9 +44,10 @@ section{scroll-margin-top:80px}
 /* ===== Hero ===== */
 .hero{background:var(--hero-bg);color:var(--hero-ink);padding:96px 0 88px}
 .hero-inner{display:grid;grid-template-columns:1.05fr .9fr;gap:56px;align-items:center}
-.hero-name{font-family:var(--serif);font-size:clamp(40px,5.2vw,64px);font-weight:700;line-height:1.15;margin:0 0 20px;letter-spacing:.01em}
+.hero-name{font-family:var(--serif);font-size:clamp(40px,5.2vw,64px);font-weight:700;line-height:1.15;margin:0 0 12px;letter-spacing:.01em}
+.hero-sub{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);color:var(--accent-bright);margin:0 0 16px;font-weight:500}
 .hero-dot{color:var(--accent-bright)}
-.hero-lead{font-size:clamp(17px,1.9vw,21px);line-height:1.8;color:rgba(242,243,239,.78);margin:0 0 34px;max-width:30em}
+.hero-lead{font-size:clamp(16px,1.7vw,19px);line-height:1.85;color:rgba(242,243,239,.78);margin:0 0 34px;max-width:32em}
 .hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 28px;border-radius:999px;font-size:15px;font-weight:500;text-decoration:none;transition:transform .18s ease,background .18s ease,border-color .18s ease,color .18s ease}
 .btn-solid{background:var(--accent-bright);color:#0D1713;border:1px solid var(--accent-bright)}
@@ -75,55 +76,45 @@ section{scroll-margin-top:80px}
 .fact:last-child{border-bottom:1px solid var(--line)}
 .fact dt{color:var(--accent);font-weight:500;font-size:14px;letter-spacing:.06em}
 .fact dd{margin:0;font-size:15px;color:var(--ink-soft)}
+.fact a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color .18s ease,border-color .18s ease}
+.fact a:hover{color:var(--accent);border-color:var(--accent)}
 
-/* ===== 项目 ===== */
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.proj-card{background:#FFFFFF;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.proj-card:hover{transform:translateY(-4px);border-color:rgba(20,108,90,.45);box-shadow:0 14px 30px rgba(28,32,36,.07)}
-.proj-cover{aspect-ratio:3/2;overflow:hidden;background:var(--line)}
-.proj-cover img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
-.proj-card:hover .proj-cover img{transform:scale(1.04)}
-.proj-body{padding:22px 24px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
-.proj-title{font-family:var(--serif);font-size:19px;font-weight:600;margin:0}
-.proj-desc{color:var(--ink-soft);font-size:14.5px;margin:0;line-height:1.75}
-.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:12px}
-.tag{font-size:12.5px;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 12px}
+/* ===== 技能（熟练度条） ===== */
+.skill-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;row-gap:26px}
+.skill-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.skill-name{font-size:15px;font-weight:500}
+.skill-pct{font-size:14px;color:var(--accent);font-variant-numeric:tabular-nums}
+.skill-track{height:9px;border-radius:999px;background:var(--line);overflow:hidden}
+.skill-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#146C5A,#3F9E8A)}
 
-/* ===== 技能 ===== */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.skill-group{border:1px solid var(--line);border-radius:12px;padding:26px 26px 28px;background:#FFFFFF}
-.skill-group h3{font-family:var(--serif);font-size:17px;font-weight:600;margin:0 0 18px}
-.skill-list{display:flex;flex-wrap:wrap;gap:8px}
-.skill-list span{border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:13.5px;color:var(--ink-soft);transition:border-color .18s ease,color .18s ease}
-.skill-list span:hover{border-color:var(--accent);color:var(--accent)}
+/* ===== 兴趣爱好 ===== */
+.hobby-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.hobby-card{border:1px solid var(--line);border-radius:12px;background:#FFFFFF;padding:30px 30px 32px}
+.hobby-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
+.hobby-icon svg{width:22px;height:22px}
+.hobby-title{font-family:var(--serif);font-size:20px;font-weight:600;margin:0 0 8px}
+.hobby-desc{color:var(--ink-soft);font-size:15px;margin:0;line-height:1.8}
 
-/* ===== 经历（时间轴） ===== */
-.timeline{position:relative}
-.timeline::before{content:"";position:absolute;left:calc(128px + 20px + 12px);top:10px;bottom:10px;width:1px;background:var(--line);transform:translateX(-.5px)}
-.tl-row{display:grid;grid-template-columns:128px 24px 1fr;column-gap:20px}
-.tl-time{padding:22px 0;text-align:right;font-size:14px;color:var(--ink-soft);font-variant-numeric:tabular-nums;line-height:1.5}
-.tl-dot{justify-self:center;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);margin-top:30px;position:relative;z-index:1}
-.tl-body{padding:22px 0;border-bottom:1px solid var(--line)}
-.tl-row:last-child .tl-body{border-bottom:none}
-.tl-role{font-family:var(--serif);font-size:18px;font-weight:600;margin:0 0 4px}
-.tl-where{font-size:14px;color:var(--ink-soft);margin:0 0 8px}
-.tl-desc{font-size:14.5px;color:var(--ink-soft);margin:0}
+/* ===== 自我评价 ===== */
+.statement{max-width:720px;margin:0 auto;text-align:center}
+.statement-text{font-family:var(--serif);font-size:clamp(18px,2.2vw,22px);line-height:2;color:#33383E;margin:0 0 18px}
+.statement-mark{color:var(--accent);font-family:var(--serif);font-size:20px;font-weight:600}
 
 /* ===== 联系 / 页脚 ===== */
 .contact{background:var(--hero-bg);color:var(--hero-ink);padding:88px 0 0}
 .contact-inner{text-align:center}
 .contact-title{font-family:var(--serif);font-size:clamp(26px,3.4vw,38px);font-weight:700;margin:0 0 16px}
 .contact-sub{color:rgba(242,243,239,.7);margin:0 auto 36px;max-width:34em;font-size:16px}
-.contact-email{display:inline-flex;align-items:center;gap:10px;font-size:18px;color:var(--hero-ink);text-decoration:none;border-bottom:1px solid var(--accent-bright);padding-bottom:4px;transition:color .18s ease}
-.contact-email:hover{color:var(--accent-bright)}
-.contact-social{display:flex;justify-content:center;gap:14px;margin-top:38px}
+.contact-actions{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.contact-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 30px;border-radius:999px;font-size:16px;text-decoration:none;transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}
+.contact-btn svg{width:18px;height:18px}
+.contact-btn-mail{background:var(--accent-bright);color:#0D1713}
+.contact-btn-mail:hover{background:#5BB39F;transform:translateY(-2px)}
+.contact-btn-tel{border:1px solid rgba(255,255,255,.35);color:var(--hero-ink)}
+.contact-btn-tel:hover{border-color:var(--accent-bright);color:var(--accent-bright);transform:translateY(-2px)}
 .contact-foot{border-top:1px solid rgba(255,255,255,.12);margin-top:64px;padding:22px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13.5px;color:rgba(242,243,239,.55)}
 .contact-foot a{color:rgba(242,243,239,.75);text-decoration:none}
 .contact-foot a:hover{color:var(--accent-bright)}
-
-/* ===== Toast ===== */
-.toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,16px);background:var(--ink);color:var(--hero-ink);padding:10px 20px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:100;box-shadow:0 8px 24px rgba(28,32,36,.22)}
-.toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ===== 响应式 ===== */
 @media (max-width:960px){
@@ -131,9 +122,7 @@ section{scroll-margin-top:80px}
   .hero-inner{grid-template-columns:1fr;gap:44px}
   .hero-figure img{aspect-ratio:16/10}
   .about-grid{grid-template-columns:1fr;gap:40px}
-  .skills-grid{grid-template-columns:1fr 1fr}
-  .timeline{grid-template-columns:96px 20px 1fr;column-gap:16px}
-  .timeline::before{left:calc(96px + 16px + 10px)}
+  .skill-grid{column-gap:36px}
 }
 @media (max-width:640px){
   .wrap{padding:0 20px}
@@ -141,10 +130,8 @@ section{scroll-margin-top:80px}
   .section-head{margin-bottom:36px}
   .head-nav{gap:18px}
   .head-nav a{font-size:14px}
-  .skills-grid{grid-template-columns:1fr}
-  .timeline{grid-template-columns:76px 16px 1fr;column-gap:12px}
-  .timeline::before{left:calc(76px + 12px + 8px)}
-  .tl-time{font-size:12.5px}
+  .skill-grid{grid-template-columns:1fr;row-gap:22px}
+  .hobby-grid{grid-template-columns:1fr}
   .contact-foot{flex-direction:column;align-items:center;text-align:center}
 }
 @media (prefers-reduced-motion:reduce){
@@ -158,12 +145,12 @@ section{scroll-margin-top:80px}
 <!-- ===== 顶部导航 ===== -->
 <header class="site-head">
   <div class="wrap head-inner">
-    <a class="brand" href="#top">陈屿<span class="brand-dot">.</span></a>
+    <a class="brand" href="#top">袁智勇<span class="brand-dot">.</span></a>
     <nav class="head-nav" aria-label="页面导航">
       <a href="#about">关于</a>
-      <a href="#projects">项目</a>
       <a href="#skills">技能</a>
-      <a href="#experience">经历</a>
+      <a href="#hobbies">兴趣</a>
+      <a href="#statement">评价</a>
       <a href="#contact">联系</a>
     </nav>
   </div>
@@ -174,21 +161,19 @@ section{scroll-margin-top:80px}
   <section class="hero" aria-label="开场介绍">
     <div class="wrap hero-inner">
       <div class="hero-copy">
-        <h1 class="hero-name">陈屿<span class="hero-dot">.</span></h1>
-        <p class="hero-lead">全栈开发者，专注 Web 产品从想法到上线的全过程——从交互原型、前端工程到后端服务与部署。</p>
+        <h1 class="hero-name">袁智勇<span class="hero-dot">.</span></h1>
+        <p class="hero-sub">微电子科学与技术 · 在读</p>
+        <p class="hero-lead">具备扎实的半导体物理与集成电路设计基础，熟悉器件原理、电路设计与工艺制造流程，热衷于将理论知识应用于实际工程问题。</p>
         <div class="hero-cta">
-          <a class="btn btn-solid" href="#projects">查看项目</a>
+          <a class="btn btn-solid" href="#skills">查看技能</a>
           <a class="btn btn-ghost" href="#contact">联系我</a>
         </div>
         <div class="hero-social">
-          <a class="social-link" href="https://github.com/" data-placeholder="GitHub 主页" aria-label="GitHub（占位链接，请替换）">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-          </a>
-          <a class="social-link" href="mailto:hello@example.com" aria-label="发邮件：hello@example.com">
+          <a class="social-link" href="mailto:2156985388@qq.com" aria-label="发邮件：2156985388@qq.com">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
           </a>
-          <a class="social-link" href="https://juejin.cn/" data-placeholder="技术博客主页" aria-label="技术博客（占位链接，请替换）">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          <a class="social-link" href="tel:18022148260" aria-label="拨打电话：18022148260">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </a>
         </div>
       </div>
@@ -198,122 +183,96 @@ section{scroll-margin-top:80px}
     </div>
   </section>
 
-  <!-- ===== 关于 ===== -->
+  <!-- ===== 关于我 ===== -->
   <section class="section" id="about" aria-label="关于我">
     <div class="wrap about-grid">
       <div class="section-head">
         <h2 class="section-title">关于我</h2>
-        <p class="section-sub">一段简短的自述，让访客快速了解你的背景与工作方式。</p>
+        <p class="section-sub">基本信息与个人简介。</p>
       </div>
       <div>
         <div class="about-text">
-          <p>你好，我是陈屿，一名常驻广州的全栈开发者。我习惯把复杂问题拆解成清晰、可维护的代码，也乐于参与产品讨论——好的工程来自对问题的理解，而不仅仅是实现。</p>
-          <p>工作之外，我维护两个开源项目，偶尔写一些关于工程实践的笔记，最近在尝试把阅读和知识管理做成趁手的工具。</p>
+          <p>微电子科学与技术专业在读，具备扎实的半导体物理与集成电路设计基础。熟悉器件原理、电路设计与工艺制造流程，能够独立完成相关课题研究与实验分析。性格踏实稳重，具备较强的学习能力和团队协作精神。</p>
         </div>
         <dl class="facts">
-          <div class="fact"><dt>目前</dt><dd>某互联网公司，交易系统前端负责人（占位）</dd></div>
-          <div class="fact"><dt>方向</dt><dd>Web 全栈、数据可视化、性能优化</dd></div>
-          <div class="fact"><dt>兴趣</dt><dd>开源、技术写作、产品设计</dd></div>
+          <div class="fact"><dt>专业</dt><dd>微电子科学与技术</dd></div>
+          <div class="fact"><dt>电话</dt><dd><a href="tel:18022148260">18022148260</a></dd></div>
+          <div class="fact"><dt>邮箱</dt><dd><a href="mailto:2156985388@qq.com">2156985388@qq.com</a></dd></div>
+          <div class="fact"><dt>兴趣</dt><dd>足球 · 吉他</dd></div>
         </dl>
       </div>
     </div>
   </section>
 
-  <!-- ===== 项目 ===== -->
-  <section class="section" id="projects" aria-label="项目作品" style="background:#EFF1ED">
+  <!-- ===== 专业技能 ===== -->
+  <section class="section" id="skills" aria-label="专业技能" style="background:#EFF1ED">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="section-title">项目作品</h2>
-        <p class="section-sub">一些我参与或主导的项目，内容为占位示例，可替换为真实项目。</p>
+        <h2 class="section-title">专业技能</h2>
+        <p class="section-sub">在校期间持续投入学习与训练的方向，数值为当前熟练度自评。</p>
       </div>
-      <div class="proj-grid">
-        <article class="proj-card">
-          <div class="proj-cover"><img src="assets/project-read.jpg" alt="项目封面：书本与光束的抽象插画" width="2048" height="1365" loading="lazy"></div>
-          <div class="proj-body">
-            <h3 class="proj-title">读光 · AI 阅读助手</h3>
-            <p class="proj-desc">把长文、论文变成结构化的要点卡片与知识图谱，支持多端同步与本地优先存储。</p>
-            <div class="proj-tags"><span class="tag">Next.js</span><span class="tag">LLM</span><span class="tag">PostgreSQL</span></div>
-          </div>
-        </article>
-        <article class="proj-card">
-          <div class="proj-cover"><img src="assets/project-data.jpg" alt="项目封面：折线图与网格的抽象插画" width="2048" height="1365" loading="lazy"></div>
-          <div class="proj-body">
-            <h3 class="proj-title">城迹 · 出行数据看板</h3>
-            <p class="proj-desc">城市公共交通的实时客流与热力分析，支持多维度下钻、同比环比与异常告警。</p>
-            <div class="proj-tags"><span class="tag">React</span><span class="tag">ECharts</span><span class="tag">Go</span></div>
-          </div>
-        </article>
-        <article class="proj-card">
-          <div class="proj-cover"><img src="assets/project-ui.jpg" alt="项目封面：方块与模块化网格的抽象插画" width="2048" height="1365" loading="lazy"></div>
-          <div class="proj-body">
-            <h3 class="proj-title">pine-ui · 开源组件库</h3>
-            <p class="proj-desc">面向数据密集型产品的 React 组件库，30+ 组件，按需引入、类型完备、主题可配置。</p>
-            <div class="proj-tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Storybook</span></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 技能 ===== -->
-  <section class="section" id="skills" aria-label="技能">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title">技能</h2>
-        <p class="section-sub">日常使用与持续投入的技术栈。</p>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <h3>前端</h3>
-          <div class="skill-list"><span>TypeScript</span><span>React</span><span>Vue</span><span>Vite</span><span>Webpack</span><span>CSS / 动画</span></div>
+      <div class="skill-grid">
+        <div>
+          <div class="skill-head"><span class="skill-name">半导体器件</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
         </div>
-        <div class="skill-group">
-          <h3>后端</h3>
-          <div class="skill-list"><span>Node.js</span><span>Go</span><span>Python</span><span>PostgreSQL</span><span>Redis</span></div>
+        <div>
+          <div class="skill-head"><span class="skill-name">集成电路设计</span><span class="skill-pct">80%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:80%"></div></div>
         </div>
-        <div class="skill-group">
-          <h3>工具</h3>
-          <div class="skill-list"><span>Git</span><span>Docker</span><span>CI/CD</span><span>Figma</span><span>Linux</span></div>
+        <div>
+          <div class="skill-head"><span class="skill-name">C / C++ 编程</span><span class="skill-pct">80%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div>
+          <div class="skill-head"><span class="skill-name">PCB 设计与制版</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+        <div>
+          <div class="skill-head"><span class="skill-name">Matlab / Simulink</span><span class="skill-pct">72%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:72%"></div></div>
+        </div>
+        <div>
+          <div class="skill-head"><span class="skill-name">Python 数据分析</span><span class="skill-pct">70%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:70%"></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== 经历 ===== -->
-  <section class="section" id="experience" aria-label="经历" style="background:#EFF1ED">
+  <!-- ===== 兴趣爱好 ===== -->
+  <section class="section" id="hobbies" aria-label="兴趣爱好">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="section-title">经历</h2>
-        <p class="section-sub">教育背景与职业轨迹，时间与公司均为占位示例。</p>
+        <h2 class="section-title">兴趣爱好</h2>
+        <p class="section-sub">学习之外，保持对生活的热爱。</p>
       </div>
-      <div class="timeline">
-        <div class="tl-row">
-          <time class="tl-time">2021.07 — 至今</time>
-          <span class="tl-dot" aria-hidden="true"></span>
-          <div class="tl-body">
-            <h3 class="tl-role">全栈工程师</h3>
-            <p class="tl-where">某互联网公司 · 广州</p>
-            <p class="tl-desc">负责交易系统前端架构与性能优化，主导灰度发布与监控体系搭建，支撑日均百万级请求。</p>
+      <div class="hobby-grid">
+        <div class="hobby-card">
+          <div class="hobby-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8l3.5 2.5-1.3 4.2h-4.4l-1.3-4.2z"/><path d="M12 8V4.2M15.5 10.5l3.9-.9M14.2 14.7l2.5 3.2M9.8 14.7l-2.5 3.2M8.5 10.5l-3.9-.9"/></svg>
           </div>
+          <h3 class="hobby-title">足球</h3>
+          <p class="hobby-desc">热爱团队运动，校队成员，培养协作意识与拼搏精神。</p>
         </div>
-        <div class="tl-row">
-          <time class="tl-time">2019.09 — 2021.06</time>
-          <span class="tl-dot" aria-hidden="true"></span>
-          <div class="tl-body">
-            <h3 class="tl-role">前端工程师</h3>
-            <p class="tl-where">某创业公司 · 深圳</p>
-            <p class="tl-desc">从零搭建数据可视化平台，沉淀 20+ 业务看板，将报表制作周期从周缩短到小时级。</p>
+        <div class="hobby-card">
+          <div class="hobby-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
           </div>
+          <h3 class="hobby-title">吉他</h3>
+          <p class="hobby-desc">自学民谣吉他三年，喜爱指弹与弹唱，陶冶艺术情操。</p>
         </div>
-        <div class="tl-row">
-          <time class="tl-time">2015.09 — 2019.06</time>
-          <span class="tl-dot" aria-hidden="true"></span>
-          <div class="tl-body">
-            <h3 class="tl-role">本科 · 计算机科学与技术</h3>
-            <p class="tl-where">某大学</p>
-            <p class="tl-desc">方向为 Web 开发与分布式系统，曾获校级程序设计竞赛一等奖。</p>
-          </div>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 自我评价 ===== -->
+  <section class="section" id="statement" aria-label="自我评价" style="background:#EFF1ED">
+    <div class="wrap">
+      <div class="statement">
+        <h2 class="section-title">自我评价</h2>
+        <p class="statement-text">做事认真负责，注重细节，具备良好的逻辑思维与问题分析能力。在专业学习中勤于钻研，乐于接受新技术与新挑战；在团队合作中善于沟通，能够积极配合并推动任务完成。</p>
+        <p class="statement-mark">期待在微电子领域持续深耕，不断提升专业素养与工程实践能力。</p>
       </div>
     </div>
   </section>
@@ -321,49 +280,30 @@ section{scroll-margin-top:80px}
   <!-- ===== 联系 ===== -->
   <footer class="contact" id="contact">
     <div class="wrap contact-inner">
-      <h2 class="contact-title">一起做点有意思的东西</h2>
-      <p class="contact-sub">如果你有想法、项目或机会想聊聊，欢迎写邮件给我——通常 24 小时内回复。</p>
-      <a class="contact-email" href="mailto:hello@example.com">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-        hello@example.com
-      </a>
-      <div class="contact-social">
-        <a class="social-link" href="https://github.com/" data-placeholder="GitHub 主页" aria-label="GitHub（占位链接，请替换）">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+      <h2 class="contact-title">保持联系</h2>
+      <p class="contact-sub">无论是学习交流、项目合作还是求职机会，都欢迎随时联系我。</p>
+      <div class="contact-actions">
+        <a class="contact-btn contact-btn-mail" href="mailto:2156985388@qq.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          2156985388@qq.com
         </a>
-        <a class="social-link" href="https://juejin.cn/" data-placeholder="技术博客主页" aria-label="技术博客（占位链接，请替换）">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        <a class="contact-btn contact-btn-tel" href="tel:18022148260">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          18022148260
         </a>
       </div>
     </div>
     <div class="wrap contact-foot">
-      <span>© <span id="year"></span> 陈屿 · 用 HTML/CSS 构建，托管于 GitHub Pages</span>
+      <span>© <span id="year"></span> 袁智勇 · 用 HTML/CSS 构建，托管于 GitHub Pages</span>
       <a href="#top">回到顶部 ↑</a>
     </div>
   </footer>
 </main>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
 (function(){
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
-
-  var toast = document.getElementById('toast');
-  var toastTimer = null;
-  function showToast(msg){
-    toast.textContent = msg;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
-  }
-  document.querySelectorAll('[data-placeholder]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      showToast('占位链接：把这里替换成你的真实主页即可');
-    });
-  });
 })();
 </script>
 </body>
