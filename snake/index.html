@@ -189,6 +189,7 @@ canvas{
     <p class="ov-score">得分 <b id="final-score">0</b></p>
     <p class="ov-score">最高 <b id="final-hi">0</b></p>
     <button class="btn" id="btn-restart">再来一局</button>
+    <button class="btn ghost" id="btn-ai-over">AI 演示</button>
     <button class="btn ghost" id="btn-reset-hi-over">重置最高分</button>
   </div>
 </div>
@@ -593,6 +594,7 @@ document.getElementById('btn-pause').addEventListener('click',function(){
 document.getElementById('btn-restart').addEventListener('click',startGame);
 document.getElementById('btn-restart-p').addEventListener('click',startGame);
 document.getElementById('btn-ai').addEventListener('click',startAI);
+document.getElementById('btn-ai-over').addEventListener('click',startAI);
 
 /* 重置最高分：历史记录从零开始 */
 function resetHi(btn){
