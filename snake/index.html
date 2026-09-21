@@ -177,10 +177,9 @@ canvas{
   <!-- 暂停 -->
   <div class="overlay hidden" id="ov-pause">
     <p class="ov-title">已暂停</p>
-    <div class="btn-row">
-      <button class="btn" id="btn-resume">继续</button>
-      <button class="btn ghost" id="btn-restart-p">重新开始</button>
-    </div>
+    <button class="btn" id="btn-resume">继续</button>
+    <button class="btn ghost" id="btn-ai-p">AI 演示</button>
+    <button class="btn ghost" id="btn-restart-p">重新开始</button>
   </div>
 
   <!-- 结束 -->
@@ -710,6 +709,7 @@ document.getElementById('btn-pause').addEventListener('click',function(){
 });
 document.getElementById('btn-restart').addEventListener('click',startGame);
 document.getElementById('btn-restart-p').addEventListener('click',startGame);
+document.getElementById('btn-ai-p').addEventListener('click',startAI);
 document.getElementById('btn-ai').addEventListener('click',startAI);
 document.getElementById('btn-ai-over').addEventListener('click',startAI);
 
