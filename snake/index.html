@@ -9,8 +9,11 @@
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Press+Start+2P&display=swap">
 <style>
 /* ===== 基础 ===== */
+/* 主题① 像素夜色（默认 · 深色） */
 :root{
   --bg:#0c0e13;
+  --bg-glow-1:#141a26;
+  --bg-glow-2:#101826;
   --panel:#131720;
   --panel-edge:#232a38;
   --ink:#dbe4ee;
@@ -20,8 +23,45 @@
   --green-glow:rgba(61,240,122,.35);
   --red:#ff3b5c;
   --gold:#ffcf3f;
+  --well:#1a2130;
+  --well-hi:#24304a;
+  --board:#0b0d12;
+  --overlay:rgba(8,10,14,.82);
+  --modal-bg:rgba(6,8,11,.78);
+  --btn-ink:#0a2414;
+  --btn-shadow:#0a3a1f;
+  --stage-edge:#0a0c10;
+  --stage-shadow:0 14px 40px rgba(0,0,0,.5),inset 0 0 24px rgba(0,0,0,.35);
+  --scan:rgba(255,255,255,.028);
+  --scan-blend:screen;
   --pixel:"Press Start 2P","Courier New",monospace;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+/* 主题② 明亮白昼（浅色） */
+html[data-theme="light"]{
+  --bg:#eef1ec;
+  --bg-glow-1:#ffffff;
+  --bg-glow-2:#e4eade;
+  --panel:#ffffff;
+  --panel-edge:#cbd3c7;
+  --ink:#1d241f;
+  --ink-dim:#5f6a61;
+  --green:#12a150;
+  --green-deep:#0b6b33;
+  --green-glow:rgba(18,161,80,.22);
+  --red:#d92038;
+  --gold:#a97600;
+  --well:#e8ede4;
+  --well-hi:#d8e0d2;
+  --board:#f5f7f3;
+  --overlay:rgba(240,243,238,.9);
+  --modal-bg:rgba(232,237,229,.82);
+  --btn-ink:#ffffff;
+  --btn-shadow:#0b6b33;
+  --stage-edge:#c3ccbd;
+  --stage-shadow:0 12px 30px rgba(30,45,30,.16),inset 0 0 20px rgba(30,50,30,.05);
+  --scan:rgba(20,45,25,.045);
+  --scan-blend:multiply;
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
@@ -30,17 +70,24 @@ body{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   min-height:100%;padding:16px;line-height:1.6;
   background-image:
-    radial-gradient(ellipse at 50% 0%, #141a26 0%, var(--bg) 65%),
-    radial-gradient(ellipse at 50% 120%, #101826 0%, var(--bg) 60%);
+    radial-gradient(ellipse at 50% 0%, var(--bg-glow-1) 0%, var(--bg) 65%),
+    radial-gradient(ellipse at 50% 120%, var(--bg-glow-2) 0%, var(--bg) 60%);
 }
 a{color:inherit}
 
-/* ===== 标题 ===== */
+/* ===== 顶栏：标题 + 主题切换 ===== */
+.topbar{width:min(92vw,440px);display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .title{
-  font-family:var(--pixel);font-size:clamp(22px,6vw,34px);letter-spacing:.06em;
-  color:var(--green);text-shadow:0 0 12px var(--green-glow),0 3px 0 #0a3a1f;
-  margin:0 0 14px;text-align:center;
+  font-family:var(--pixel);font-size:clamp(20px,5.4vw,30px);letter-spacing:.06em;
+  color:var(--green);text-shadow:0 0 12px var(--green-glow),0 3px 0 var(--btn-shadow);
+  margin:0;text-align:left;
 }
+.theme-btn{
+  font-family:var(--pixel);font-size:9px;line-height:1.5;color:var(--ink);background:var(--well);
+  border:1px solid var(--panel-edge);padding:9px 11px;cursor:pointer;user-select:none;white-space:nowrap;
+}
+.theme-btn:hover{color:var(--green);border-color:var(--green)}
+.theme-btn:active{transform:translateY(1px)}
 
 /* ===== 计分条 ===== */
 .hud{
@@ -63,31 +110,31 @@ a{color:inherit}
 .combo[hidden]{display:none}
 .combo-x{white-space:nowrap}
 .combo-x b{color:var(--green);font-weight:400}
-.combo-bar{flex:1;height:7px;background:#1a2130;border:1px solid var(--panel-edge)}
+.combo-bar{flex:1;height:7px;background:var(--well);border:1px solid var(--panel-edge)}
 .combo-fill{display:block;height:100%;background:var(--green);width:0%}
 
 /* ===== 游戏舞台 ===== */
 .stage{
   position:relative;width:min(92vw,440px);
   background:var(--panel);border:4px solid var(--panel-edge);padding:8px;
-  box-shadow:0 0 0 1px #0a0c10,0 14px 40px rgba(0,0,0,.5),inset 0 0 24px rgba(0,0,0,.35);
+  box-shadow:0 0 0 1px var(--stage-edge),var(--stage-shadow);
 }
 canvas{
   display:block;width:100%;height:auto;aspect-ratio:1;
   image-rendering:pixelated;image-rendering:crisp-edges;
-  background:#0b0d12;touch-action:none;
+  background:var(--board);touch-action:none;
 }
 /* 扫描线 */
 .stage::after{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px);
-  mix-blend-mode:screen;
+  background:repeating-linear-gradient(0deg,var(--scan) 0 1px,transparent 1px 3px);
+  mix-blend-mode:var(--scan-blend);
 }
 
 /* ===== 覆盖层 ===== */
 .overlay{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:rgba(8,10,14,.82);text-align:center;padding:20px;gap:14px;z-index:5;
+  background:var(--overlay);text-align:center;padding:20px;gap:14px;z-index:5;
 }
 .overlay.hidden{display:none}
 .ov-title{font-family:var(--pixel);font-size:20px;color:var(--green);text-shadow:0 0 10px var(--green-glow);margin:0}
@@ -97,21 +144,65 @@ canvas{
 
 /* ===== 按钮 ===== */
 .btn{
-  font-family:var(--pixel);font-size:12px;color:#0a2414;background:var(--green);
-  border:0;padding:13px 26px;cursor:pointer;box-shadow:0 4px 0 #0a3a1f,0 6px 14px rgba(0,0,0,.4);
+  font-family:var(--pixel);font-size:12px;color:var(--btn-ink);background:var(--green);
+  border:0;padding:13px 26px;cursor:pointer;box-shadow:0 4px 0 var(--btn-shadow),0 6px 14px rgba(0,0,0,.4);
   transition:transform .06s ease,box-shadow .06s ease;user-select:none;
 }
-.btn:hover{background:#5dff99}
-.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0a3a1f}
+.btn:hover{filter:brightness(1.12)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--btn-shadow)}
 .btn.ghost{background:transparent;color:var(--ink);box-shadow:0 4px 0 var(--panel-edge),0 6px 14px rgba(0,0,0,.3);border:1px solid var(--panel-edge)}
-.btn.ghost:hover{color:var(--green);border-color:var(--green)}
+.btn.ghost:hover{color:var(--green);border-color:var(--green);filter:none}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+/* ===== 数据条：最高分 / 上一局 / 重置 ===== */
+.stats{width:min(92vw,440px);display:flex;align-items:stretch;gap:8px;margin-bottom:10px}
+.stat{
+  flex:1;min-width:0;background:var(--panel);border:2px solid var(--panel-edge);
+  padding:8px 10px;display:flex;flex-direction:column;gap:4px;
+}
+.stat-k{font-family:var(--pixel);font-size:7px;color:var(--ink-dim);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat-v{font-family:var(--pixel);font-size:15px;font-weight:400;color:var(--ink);line-height:1.2}
+.stat.hi .stat-v{color:var(--gold)}
+.stat.hi .stat-k{color:var(--gold)}
+.mini-btn{
+  font-family:var(--pixel);font-size:9px;line-height:1.5;color:var(--ink);background:transparent;
+  border:2px solid var(--panel-edge);padding:8px 10px;cursor:pointer;user-select:none;white-space:nowrap;
+}
+.mini-btn:hover{color:var(--red);border-color:var(--red)}
+.mini-btn:active{transform:translateY(1px)}
+
+/* ===== 战绩 ===== */
+.records{width:min(92vw,440px);margin-top:16px;background:var(--panel);border:2px solid var(--panel-edge);padding:12px}
+.rec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.rec-title{font-family:var(--pixel);font-size:10px;color:var(--green);margin:0;letter-spacing:.06em}
+.rec-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.rec-item{
+  display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;
+  font-family:var(--pixel);font-size:9px;color:var(--ink-dim);background:var(--well);padding:7px 9px;
+}
+.rec-item.best{outline:1px solid var(--gold)}
+.rec-item .rec-score{font-size:11px;color:var(--green);text-align:right}
+.rec-item.best .rec-score{color:var(--gold)}
+.rec-meta{font-size:8px;color:var(--ink-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rec-empty{font-size:12px;color:var(--ink-dim);margin:4px 0 0;font-family:var(--sans)}
+
+/* ===== 全部战绩弹层 ===== */
+.modal{position:fixed;inset:0;z-index:20;background:var(--modal-bg);display:flex;align-items:center;justify-content:center;padding:18px}
+.modal.hidden{display:none}
+.modal-box{
+  width:min(94vw,520px);max-height:84vh;background:var(--panel);border:3px solid var(--panel-edge);
+  padding:14px;display:flex;flex-direction:column;gap:10px;
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.modal-head h2{font-family:var(--pixel);font-size:11px;color:var(--green);margin:0;line-height:1.6}
+.modal-list{list-style:none;margin:0;padding:0;overflow:auto;display:flex;flex-direction:column;gap:4px;-webkit-overflow-scrolling:touch}
+.modal-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 
 /* ===== 操作区 ===== */
 .controls{width:min(92vw,440px);margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .hint{font-size:12px;color:var(--ink-dim);margin:0;line-height:1.8}
 .hint kbd{
-  font-family:var(--pixel);font-size:9px;background:#1a2130;border:1px solid var(--panel-edge);
+  font-family:var(--pixel);font-size:9px;background:var(--well);border:1px solid var(--panel-edge);
   border-bottom-width:3px;padding:3px 6px;color:var(--ink);
 }
 .pause-btn{font-family:var(--pixel);font-size:10px;color:var(--ink);background:transparent;border:1px solid var(--panel-edge);padding:9px 14px;cursor:pointer}
@@ -121,18 +212,18 @@ canvas{
 .dpad{display:none;width:min(92vw,440px);margin-top:10px;justify-content:center}
 .dpad-grid{display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(3,52px);gap:6px}
 .dpad button{
-  font-family:var(--pixel);font-size:12px;color:var(--ink);background:#1a2130;
+  font-family:var(--pixel);font-size:12px;color:var(--ink);background:var(--well);
   border:1px solid var(--panel-edge);cursor:pointer;user-select:none;
 }
 .dpad button:hover{color:var(--green);border-color:var(--green)}
-.dpad button:active{background:#24304a}
+.dpad button:active{background:var(--well-hi)}
 .dpad .u{grid-column:2;grid-row:1}
 .dpad .l{grid-column:1;grid-row:2}
 .dpad .r{grid-column:3;grid-row:2}
 .dpad .d{grid-column:2;grid-row:3}
 .dpad .dot{grid-column:2;grid-row:2}
 
-.foot{margin-top:14px;font-size:11px;color:#3c4554;text-align:center}
+.foot{margin-top:14px;font-size:11px;color:var(--ink-dim);opacity:.85;text-align:center}
 
 /* ===== 响应式 ===== */
 @media (pointer:coarse),(max-width:640px){
@@ -143,10 +234,22 @@ canvas{
   *{transition:none!important;animation:none!important}
 }
 </style>
+<script>
+/* 刷新后保留所选主题：在首帧绘制前就把主题写回根元素，避免闪一下默认配色 */
+(function(){
+  try{
+    var t=localStorage.getItem('snake_theme');
+    if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  }catch(e){}
+})();
+</script>
 </head>
 <body>
 
-<h1 class="title">SNAKE</h1>
+<div class="topbar">
+  <h1 class="title">SNAKE</h1>
+  <button class="theme-btn" id="btn-theme" type="button" aria-pressed="false">☀ 浅色</button>
+</div>
 
 <div class="hud">
   <span class="side">LV <b id="level">1</b></span>
@@ -154,8 +257,16 @@ canvas{
     <span class="score-label">SCORE</span>
     <b id="score">0</b>
   </span>
-  <span class="side hi">HI <b id="hi">0</b></span>
+  <span class="side">ROUND <b id="rounds">0</b></span>
 </div>
+
+<!-- 计分制：最高分 / 上一局（新一局不清零）+ 重置 -->
+<div class="stats">
+  <span class="stat hi"><span class="stat-k">最高分 BEST</span><b class="stat-v" id="hi">0</b></span>
+  <span class="stat last"><span class="stat-k">上一局 LAST</span><b class="stat-v" id="last">0</b></span>
+  <button class="mini-btn" id="btn-reset-stats" type="button">重置记录</button>
+</div>
+
 <div class="combo" id="combo-wrap" hidden>
   <span class="combo-x">COMBO ×<b id="combo">1</b></span>
   <span class="combo-bar"><span class="combo-fill" id="combo-fill"></span></span>
@@ -170,8 +281,8 @@ canvas{
     <p class="ov-sub">吃食物得分，连续快吃叠加连击倍率；每 5 个食物出现金色奖励果 +50 分。别撞墙、别咬到自己。</p>
     <button class="btn" id="btn-start">开始游戏</button>
     <button class="btn ghost" id="btn-ai">AI 演示</button>
-    <button class="btn ghost" id="btn-reset-hi-start">重置最高分</button>
-    <p class="ov-sub">方向键 / WASD 控制</p>
+    <button class="btn ghost" id="btn-reset-stats-start">重置记录</button>
+    <p class="ov-sub">方向键 / WASD 控制 · <kbd>T</kbd> 切换主题</p>
   </div>
 
   <!-- 暂停 -->
@@ -185,16 +296,17 @@ canvas{
   <!-- 结束 -->
   <div class="overlay hidden" id="ov-over">
     <p class="ov-title">游戏结束</p>
-    <p class="ov-score">得分 <b id="final-score">0</b></p>
-    <p class="ov-score">最高 <b id="final-hi">0</b></p>
+    <p class="ov-score">本局得分 <b id="final-score">0</b></p>
+    <p class="ov-score">最高分 <b id="final-hi">0</b> · 上一局 <b id="final-last">0</b> · 第 <b id="final-rounds">0</b> 局</p>
     <button class="btn" id="btn-restart">再来一局</button>
     <button class="btn ghost" id="btn-ai-over">AI 演示</button>
-    <button class="btn ghost" id="btn-reset-hi-over">重置最高分</button>
+    <button class="btn ghost" id="btn-history-over">查看战绩</button>
+    <button class="btn ghost" id="btn-reset-stats-over">重置记录</button>
   </div>
 </div>
 
 <div class="controls">
-  <p class="hint hint-desktop"><kbd>↑↓←→</kbd> / <kbd>WASD</kbd> 移动 · <kbd>空格</kbd> 开始/暂停 · <kbd>R</kbd> 重开</p>
+  <p class="hint hint-desktop"><kbd>↑↓←→</kbd> / <kbd>WASD</kbd> 移动 · <kbd>空格</kbd> 开始/暂停 · <kbd>R</kbd> 重开 · <kbd>T</kbd> 主题</p>
   <p class="hint" style="display:none" id="hint-mobile">滑动屏幕或使用十字键控制</p>
   <button class="pause-btn" id="btn-pause">暂停</button>
 </div>
@@ -210,7 +322,32 @@ canvas{
   </div>
 </div>
 
+<!-- 多局战绩：最近 10 局 -->
+<section class="records" aria-label="最近战绩">
+  <div class="rec-head">
+    <h2 class="rec-title">最近 10 局</h2>
+    <button class="mini-btn" id="btn-history-all" type="button">查看完整列表</button>
+  </div>
+  <ol class="rec-list" id="rec-list"></ol>
+  <p class="rec-empty" id="rec-empty">还没有战绩——每打完一局会自动追加到这里。</p>
+</section>
+
 <p class="foot">像素贪吃蛇 · 单文件 HTML · 键盘与触屏均可玩</p>
+
+<!-- 完整战绩列表 -->
+<div class="modal hidden" id="ov-history" role="dialog" aria-modal="true" aria-labelledby="rec-all-title">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="rec-all-title">完整战绩 · <span id="rec-total">0 局</span></h2>
+      <button class="mini-btn" id="btn-history-close" type="button">关闭</button>
+    </div>
+    <ol class="modal-list" id="rec-list-all"></ol>
+    <div class="modal-foot">
+      <span class="rec-meta" id="rec-summary"></span>
+      <button class="mini-btn" id="btn-history-clear" type="button">清空记录</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -221,15 +358,167 @@ var COLS=22, ROWS=22, CELL=16;
 var canvas=document.getElementById('game'), ctx=canvas.getContext('2d');
 var state='start'; /* start | playing | paused | over */
 var snake=[], dir={x:1,y:0}, queue=[], food=null, bonus=null, bonusDeadline=0;
-var score=0, hi=0, speed=150, acc=0, last=0;
+var score=0, speed=150, acc=0, last=0;
 var combo=1, comboTimer=0, level=1, foodsEaten=0, popups=[];
 var aiOn=false, autoplayCap=0, timerDrive=false;
 var FOOD_PTS=10, GOLD_PTS=50, COMBO_WINDOW=5000, COMBO_MAX=5;
-var HI_KEY='snake_pixel_hi';
+var STATS_KEY='snake_stats_v1', THEME_KEY='snake_theme', LEGACY_HI_KEY='snake_pixel_hi';
+var HISTORY_KEEP=100, HISTORY_SHOW=10;   /* 战绩最多留 100 局，面板显示最近 10 局 */
+var stats={hi:0,last:0,rounds:0,history:[]};
 var actx=null;
 
-try{ hi=parseInt(localStorage.getItem(HI_KEY)||'0',10)||0; }catch(e){ hi=0; }
-document.getElementById('hi').textContent=hi;
+/* ===== 计分制：得分记录（最高分 / 上一局 / 局数）+ 多局战绩 =====
+   记录写在 localStorage：开新一局只把本局的 SCORE 归零，
+   最高分和上一局分数一直不清零，只有「重置记录」按钮才全部清零。 */
+function loadStats(){
+  var raw=null;
+  try{ raw=localStorage.getItem(STATS_KEY); }catch(e){}
+  if(raw){
+    try{
+      var o=JSON.parse(raw);
+      if(o && typeof o==='object'){
+        stats.hi=Math.max(0,parseInt(o.hi,10)||0);
+        stats.last=Math.max(0,parseInt(o.last,10)||0);
+        stats.rounds=Math.max(0,parseInt(o.rounds,10)||0);
+        if(Object.prototype.toString.call(o.history)==='[object Array]'){
+          stats.history=o.history.slice(-HISTORY_KEEP);
+        }
+      }
+    }catch(e){}
+  }
+  /* 老版本只存了最高分，这里做一次迁移 */
+  if(!stats.hi && !stats.rounds){
+    try{
+      var legacy=parseInt(localStorage.getItem(LEGACY_HI_KEY)||'0',10)||0;
+      if(legacy>stats.hi) stats.hi=legacy;
+    }catch(e){}
+  }
+}
+function saveStats(){
+  try{ localStorage.setItem(STATS_KEY,JSON.stringify(stats)); }catch(e){}
+}
+function pad2(n){ return (n<10?'0':'')+n; }
+function fmtTime(ms){
+  var d=new Date(ms);
+  return pad2(d.getMonth()+1)+'-'+pad2(d.getDate())+' '+pad2(d.getHours())+':'+pad2(d.getMinutes());
+}
+/* 战绩行：一局一条 */
+function rowsHTML(items){
+  var html='';
+  for(var i=items.length-1;i>=0;i--){
+    var r=items[i];
+    var isBest=stats.hi>0 && r.score===stats.hi;
+    html+='<li class="rec-item'+(isBest?' best':'')+'">'
+        +'<span class="rec-no">#'+r.n+'</span>'
+        +'<span class="rec-meta">LV'+r.level+' · 长'+r.len+' · '+fmtTime(r.time)+'</span>'
+        +'<span class="rec-score">'+r.score+'</span>'
+        +'</li>';
+  }
+  return html;
+}
+function renderStats(){
+  document.getElementById('hi').textContent=stats.hi;
+  document.getElementById('last').textContent=stats.last;
+  document.getElementById('rounds').textContent=stats.rounds;
+  document.getElementById('final-hi').textContent=stats.hi;
+  document.getElementById('final-last').textContent=stats.last;
+  document.getElementById('final-rounds').textContent=stats.rounds;
+}
+function renderRecords(){
+  document.getElementById('rec-list').innerHTML=rowsHTML(stats.history.slice(-HISTORY_SHOW));
+  document.getElementById('rec-list-all').innerHTML=rowsHTML(stats.history);
+  document.getElementById('rec-empty').style.display=stats.history.length?'none':'block';
+  document.getElementById('rec-total').textContent=stats.rounds+' 局';
+  var sum=0, best=0;
+  for(var i=0;i<stats.history.length;i++){
+    sum+=stats.history[i].score;
+    if(stats.history[i].score>best) best=stats.history[i].score;
+  }
+  var avg=stats.history.length?Math.round(sum/stats.history.length):0;
+  document.getElementById('rec-summary').textContent='明细 '+stats.history.length+' 局 · 平均 '+avg+' 分 · 最高 '+Math.max(best,stats.hi)+' 分';
+}
+/* 每局结束时自动追加一条战绩 */
+function recordRound(roundScore,roundLevel,roundLen){
+  stats.rounds+=1;
+  if(roundScore>stats.hi) stats.hi=roundScore;
+  stats.last=roundScore;
+  stats.history.push({n:stats.rounds,score:roundScore,level:roundLevel,len:roundLen,time:Date.now()});
+  if(stats.history.length>HISTORY_KEEP) stats.history=stats.history.slice(-HISTORY_KEEP);
+  saveStats();
+  renderStats();
+  renderRecords();
+}
+/* 直接写回一份记录（不弹确认框），供重置按钮与自检复用 */
+function resetStatsSilent(next){
+  stats=next||{hi:0,last:0,rounds:0,history:[]};
+  saveStats();
+  renderStats();
+  renderRecords();
+}
+/* 重置按钮：得分 / 最高分 / 局数 / 战绩 全部清零 */
+function resetStats(btn){
+  var ok=true;
+  try{ ok=window.confirm('重置所有记录？最高分、上一局分数和全部战绩都会被清空。'); }catch(e){}
+  if(!ok) return;
+  resetStatsSilent(null);
+  try{ localStorage.removeItem(LEGACY_HI_KEY); }catch(e){}
+  if(btn){
+    var old=btn.textContent;
+    btn.textContent='已清空';
+    setTimeout(function(){ if(btn.textContent==='已清空') btn.textContent=old; },1200);
+  }
+}
+function openHistory(){
+  if(state==='playing') togglePause();   /* 看战绩时先暂停，别让蛇自己撞死 */
+  document.getElementById('ov-history').classList.remove('hidden');
+}
+function closeHistory(){ document.getElementById('ov-history').classList.add('hidden'); }
+
+/* ===== 主题：深色 / 浅色两套配色，一键切换并记住选择 ===== */
+var PALETTES={
+  dark:{
+    board:'#0b0d12', wall:'#182030', wallEdge:'#263a3a', grid:'rgba(255,255,255,.045)',
+    appleStem:'#a96b3f', appleLeaf:'#3ddc6b', apple:'#ff3b5c', appleHi:'#ff8fa5', appleDark:'#c91f40',
+    bonus:'#ffcf3f', bonusAlt:'#ffe08a', bonusHi:'#fff7dd',
+    seg:'#178a44', segMid:'#2fe06b', segHi:'#63ff9c',
+    eye:'#f4fdf7', pupil:'#0a120c', tongue:'#ff3b5c',
+    gain:'#3df07a', gold:'#ffcf3f'
+  },
+  light:{
+    board:'#f5f7f3', wall:'#dde3d7', wallEdge:'#b3bdab', grid:'rgba(20,45,25,.07)',
+    appleStem:'#8a5730', appleLeaf:'#1ea34f', apple:'#e0233f', appleHi:'#ff8fa5', appleDark:'#a8122c',
+    bonus:'#d99e00', bonusAlt:'#ffd34d', bonusHi:'#fff3c4',
+    seg:'#0f7d3d', segMid:'#22b95f', segHi:'#63e08f',
+    eye:'#ffffff', pupil:'#101a12', tongue:'#d92038',
+    gain:'#12a150', gold:'#a97600'
+  }
+};
+var PAL=PALETTES.dark;
+var theme='dark';
+function applyTheme(name,persist){
+  theme=(name==='light')?'light':'dark';
+  document.documentElement.setAttribute('data-theme',theme);
+  PAL=PALETTES[theme];
+  var btn=document.getElementById('btn-theme');
+  if(btn){
+    btn.textContent=(theme==='light')?'🌙 深色':'☀ 浅色';
+    btn.setAttribute('aria-pressed',theme==='light'?'true':'false');
+    btn.setAttribute('aria-label',(theme==='light')?'切换到深色主题':'切换到浅色主题');
+  }
+  if(persist!==false){ try{ localStorage.setItem(THEME_KEY,theme); }catch(e){} }
+}
+function toggleTheme(){ applyTheme(theme==='light'?'dark':'light'); }
+
+/* 从存储里读回主题（刷新后保留所选主题走的就是这条路径） */
+function initThemeFromStorage(){
+  var saved='dark';
+  try{ saved=localStorage.getItem(THEME_KEY)||'dark'; }catch(e){}
+  applyTheme(saved,false);
+  return theme;
+}
+
+loadStats();
+initThemeFromStorage();
 
 /* ===== 音效（WebAudio，首次交互后启用） ===== */
 function tone(f,dur,type,vol){
@@ -335,7 +624,7 @@ function step(){
     foodsEaten+=1;
     var gained=FOOD_PTS*combo;
     score+=gained; combo=Math.min(COMBO_MAX,combo+1); comboTimer=COMBO_WINDOW;
-    popups.push({x:fx,y:fy,text:'+'+gained,color:'#3df07a',born:performance.now()});
+    popups.push({x:fx,y:fy,text:'+'+gained,color:PAL.gain,born:performance.now()});
     tone(560,0.07,'square');
     if(foodsEaten%5===0) placeBonus();
     placeFood();
@@ -345,7 +634,7 @@ function step(){
     var bx=bonus.x, by=bonus.y;
     bonus=null; bonusDeadline=0;
     score+=GOLD_PTS; combo=Math.min(COMBO_MAX,combo+1); comboTimer=COMBO_WINDOW;
-    popups.push({x:bx,y:by,text:'+'+GOLD_PTS,color:'#ffcf3f',born:performance.now()});
+    popups.push({x:bx,y:by,text:'+'+GOLD_PTS,color:PAL.gold,born:performance.now()});
     tone(880,0.1,'square',0.05);
     if(speed>70) speed=Math.max(70,speed-5);
   }
@@ -374,28 +663,26 @@ function checkLevel(){
     level=nl;
     document.getElementById('level').textContent=level;
     if(!aiOn) speed=Math.max(60,speed-10); /* AI 模式锁定速度 */
-    popups.push({x:11,y:11,text:'LEVEL '+level,color:'#ffcf3f',born:performance.now(),big:true});
+    popups.push({x:11,y:11,text:'LEVEL '+level,color:PAL.gold,born:performance.now(),big:true});
     tone(660,0.08,'square',0.05);
     setTimeout(function(){ tone(990,0.1,'square',0.05); },90);
   }
 }
 function die(){
+  var wasDemo=aiOn;
   state='over';
   aiOn=false;
   tone(220,0.18,'sawtooth',0.05);
   setTimeout(function(){ tone(160,0.28,'sawtooth',0.05); },120);
-  if(score>hi){
-    hi=score;
-    try{ localStorage.setItem(HI_KEY,String(hi)); }catch(e){}
-  }
+  /* 一局打完：自动追加到战绩，并刷新最高分 / 上一局 / 局数（AI 演示局不计入） */
+  if(!wasDemo) recordRound(score,level,snake.length);
   /* 无头自跑模式：把最终得分写入标题供外部读取 */
   if(timerDrive) document.title='AUTOPLAY-SCORE '+score;
   /* 结算时让顶部分数与弹窗一致，并清掉残留的连击条 */
   document.getElementById('score').textContent=score;
   comboTimer=0; combo=1; updateComboUI();
   document.getElementById('final-score').textContent=score;
-  document.getElementById('final-hi').textContent=hi;
-  document.getElementById('hi').textContent=hi;
+  renderStats();
   show('ov-over');
 }
 function startGame(){
@@ -426,15 +713,15 @@ function px(x,y,w,h,c){ ctx.fillStyle=c; ctx.fillRect(Math.round(x),Math.round(y
 
 function render(){
   var W=canvas.width, H=canvas.height;
-  /* 背景 */
-  ctx.fillStyle='#0b0d12'; ctx.fillRect(0,0,W,H);
+  /* 背景（跟随当前主题配色） */
+  ctx.fillStyle=PAL.board; ctx.fillRect(0,0,W,H);
   /* 边框墙 */
-  ctx.fillStyle='#182030'; ctx.fillRect(0,0,W,CELL); ctx.fillRect(0,H-CELL,W,CELL);
+  ctx.fillStyle=PAL.wall; ctx.fillRect(0,0,W,CELL); ctx.fillRect(0,H-CELL,W,CELL);
   ctx.fillRect(0,0,CELL,H); ctx.fillRect(W-CELL,0,CELL,H);
-  px(CELL,CELL,W-2*CELL,1,'#263a3a'); px(CELL,H-CELL-1,W-2*CELL,1,'#263a3a');
-  px(CELL,CELL,1,H-2*CELL,'#263a3a'); px(W-CELL-1,CELL,1,H-2*CELL,'#263a3a');
+  px(CELL,CELL,W-2*CELL,1,PAL.wallEdge); px(CELL,H-CELL-1,W-2*CELL,1,PAL.wallEdge);
+  px(CELL,CELL,1,H-2*CELL,PAL.wallEdge); px(W-CELL-1,CELL,1,H-2*CELL,PAL.wallEdge);
   /* 网格 */
-  ctx.strokeStyle='rgba(255,255,255,.045)'; ctx.lineWidth=1;
+  ctx.strokeStyle=PAL.grid; ctx.lineWidth=1;
   ctx.beginPath();
   for(var x=CELL;x<W-CELL;x+=CELL){ ctx.moveTo(x+.5,CELL); ctx.lineTo(x+.5,H-CELL); }
   for(var y=CELL;y<H-CELL;y+=CELL){ ctx.moveTo(CELL,y+.5); ctx.lineTo(W-CELL,y+.5); }
@@ -465,30 +752,30 @@ function render(){
 
 function drawApple(x,y){
   var X=x*CELL, Y=y*CELL;
-  px(X+5,Y+1,6,3,'#a96b3f');       /* 柄 */
-  px(X+3,Y+3,9,2,'#3ddc6b');       /* 叶 */
-  px(X+4,Y+4,9,9,'#ff3b5c');       /* 果身 */
-  px(X+5,Y+6,3,3,'#ff8fa5');       /* 高光 */
-  px(X+10,Y+11,2,2,'#c91f40');     /* 暗部 */
+  px(X+5,Y+1,6,3,PAL.appleStem);   /* 柄 */
+  px(X+3,Y+3,9,2,PAL.appleLeaf);   /* 叶 */
+  px(X+4,Y+4,9,9,PAL.apple);       /* 果身 */
+  px(X+5,Y+6,3,3,PAL.appleHi);     /* 高光 */
+  px(X+10,Y+11,2,2,PAL.appleDark); /* 暗部 */
 }
 function drawBonus(x,y){
   var X=x*CELL, Y=y*CELL, blink=Math.floor(performance.now()/160)%2===0;
-  px(X+5,Y+5,6,6,blink?'#ffe08a':'#ffcf3f');
-  px(X+7,Y+7,2,2,'#fff7dd');
+  px(X+5,Y+5,6,6,blink?PAL.bonusAlt:PAL.bonus);
+  px(X+7,Y+7,2,2,PAL.bonusHi);
 }
 function drawSeg(x,y,isHead){
   var X=x*CELL, Y=y*CELL;
-  px(X,Y,CELL,CELL,'#178a44');          /* 轮廓 */
-  px(X+2,Y+2,CELL-4,CELL-4,'#2fe06b');  /* 主体 */
-  px(X+2,Y+2,CELL-7,CELL-7,'#63ff9c');  /* 高光 */
+  px(X,Y,CELL,CELL,PAL.seg);            /* 轮廓 */
+  px(X+2,Y+2,CELL-4,CELL-4,PAL.segMid); /* 主体 */
+  px(X+2,Y+2,CELL-7,CELL-7,PAL.segHi);  /* 高光 */
   if(isHead) drawHead(x,y);
 }
 function drawHead(x,y){
   var X=x*CELL, Y=y*CELL;
   var eyeF=4, eyeW=4, eyeH=4, pup=2;
   function eye(ex,ey,pxo,pyo){
-    ctx.fillStyle='#f4fdf7'; ctx.fillRect(Math.round(X+ex),Math.round(Y+ey),eyeW,eyeH);
-    ctx.fillStyle='#0a120c'; ctx.fillRect(Math.round(X+ex+pxo),Math.round(Y+ey+pyo),pup,pup);
+    ctx.fillStyle=PAL.eye; ctx.fillRect(Math.round(X+ex),Math.round(Y+ey),eyeW,eyeH);
+    ctx.fillStyle=PAL.pupil; ctx.fillRect(Math.round(X+ex+pxo),Math.round(Y+ey+pyo),pup,pup);
   }
   /* 眼睛位置随方向 */
   if(dir.x>0){ eye(CELL-7,3,2,1); eye(CELL-7,CELL-7,2,1); }
@@ -496,10 +783,10 @@ function drawHead(x,y){
   else if(dir.y<0){ eye(3,3,1,0); eye(CELL-7,3,1,0); }
   else{ eye(3,CELL-7,1,2); eye(CELL-7,CELL-7,1,2); }
   /* 舌尖 */
-  if(dir.x>0) px(X+CELL-2,Y+CELL/2-1,2,3,'#ff3b5c');
-  if(dir.x<0) px(X,Y+CELL/2-1,2,3,'#ff3b5c');
-  if(dir.y>0) px(X+CELL/2-1,Y+CELL-2,3,2,'#ff3b5c');
-  if(dir.y<0) px(X+CELL/2-1,Y,3,2,'#ff3b5c');
+  if(dir.x>0) px(X+CELL-2,Y+CELL/2-1,2,3,PAL.tongue);
+  if(dir.x<0) px(X,Y+CELL/2-1,2,3,PAL.tongue);
+  if(dir.y>0) px(X+CELL/2-1,Y+CELL-2,3,2,PAL.tongue);
+  if(dir.y<0) px(X+CELL/2-1,Y,3,2,PAL.tongue);
 }
 
 /* ===== 主循环 ===== */
@@ -670,6 +957,8 @@ document.addEventListener('keydown',function(e){
   }
   if(k==='KeyP'){ e.preventDefault(); if(state==='playing'||state==='paused') togglePause(); return; }
   if(k==='KeyR'){ e.preventDefault(); startGame(); return; }
+  if(k==='KeyT'){ e.preventDefault(); toggleTheme(); return; }
+  if(k==='Escape'){ closeHistory(); return; }
   if(k==='Enter'){
     if(state==='start'||state==='over') startGame();
     return;
@@ -712,27 +1001,31 @@ document.getElementById('btn-restart-p').addEventListener('click',startGame);
 document.getElementById('btn-ai-p').addEventListener('click',startAI);
 document.getElementById('btn-ai').addEventListener('click',startAI);
 document.getElementById('btn-ai-over').addEventListener('click',startAI);
+document.getElementById('btn-theme').addEventListener('click',toggleTheme);
 
-/* 重置最高分：历史记录从零开始 */
-function resetHi(btn){
-  hi=0;
-  try{ localStorage.setItem(HI_KEY,'0'); }catch(e){}
-  document.getElementById('hi').textContent='0';
-  document.getElementById('final-hi').textContent='0';
-  var old=btn.textContent;
-  btn.textContent='已清零';
-  setTimeout(function(){ btn.textContent=old; },1200);
-}
-document.getElementById('btn-reset-hi-start').addEventListener('click',function(){ resetHi(this); });
-document.getElementById('btn-reset-hi-over').addEventListener('click',function(){ resetHi(this); });
+/* 重置战绩：最高分 / 上一局 / 局数 / 历史列表 一次性清零 */
+document.getElementById('btn-reset-stats').addEventListener('click',function(){ resetStats(this); });
+document.getElementById('btn-reset-stats-start').addEventListener('click',function(){ resetStats(this); });
+document.getElementById('btn-reset-stats-over').addEventListener('click',function(){ resetStats(this); });
+
+/* 多局战绩：最近 10 局 + 完整列表 */
+document.getElementById('btn-history-all').addEventListener('click',openHistory);
+document.getElementById('btn-history-over').addEventListener('click',openHistory);
+document.getElementById('btn-history-close').addEventListener('click',closeHistory);
+document.getElementById('btn-history-clear').addEventListener('click',function(){ resetStats(this); });
+document.getElementById('ov-history').addEventListener('click',function(e){
+  if(e.target===this) closeHistory();
+});
 
 /* 切后台自动暂停 */
 document.addEventListener('visibilitychange',function(){
   if(document.hidden && state==='playing') togglePause();
 });
 
-/* 开始画面先画一帧 */
+/* 开始画面先画一帧，并把历史记录渲染出来 */
 reset();
+renderStats();
+renderRecords();
 /* 自检模式：带 ?auto 打开时自动开局并定格棋盘（不弹覆盖层），便于截图验证 */
 if(location.search.indexOf('auto')>=0){
   setTimeout(function(){
@@ -782,8 +1075,56 @@ if(location.search.indexOf('autotest')>=0){
       step();                            /* 吃掉奖励果 */
       var ok6=bonus===null && score===FOOD_PTS+GOLD_PTS;
       var ok7=popups.length===2;
-      var pass=ok1&&ok2&&ok3&&ok4&&ok5&&ok6&&ok7;
-      document.title=pass?'AUTOTEST-PASS':'AUTOTEST-FAIL '+[ok1,ok2,ok3,ok4,ok5,ok6,ok7].map(String).join('');
+      /* 新增：计分记录 / 战绩追加 / 主题切换 自检（测完还原原有记录与主题） */
+      var snapshot=JSON.stringify(stats);
+      var before=JSON.parse(snapshot);
+      var prevTheme=(function(){ try{ return localStorage.getItem(THEME_KEY)==='light'?'light':'dark'; }catch(e){ return 'dark'; } })();
+      recordRound(120,2,15);
+      var ok8=stats.rounds===before.rounds+1;                              /* 局数 +1 */
+      var ok9=stats.last===120 && stats.hi>=120;                           /* 上一局与最高分更新 */
+      var ok10=document.querySelectorAll('#rec-list .rec-item').length>=1; /* 列表自动追加 */
+      applyTheme('light');
+      var ok11=document.documentElement.getAttribute('data-theme')==='light'
+             && localStorage.getItem(THEME_KEY)==='light';                 /* 主题即时生效 + 写入存储 */
+      applyTheme('dark');
+      var ok12=document.documentElement.getAttribute('data-theme')==='dark'
+             && localStorage.getItem(THEME_KEY)==='dark';                  /* 再切回来 */
+      applyTheme(prevTheme);
+      /* 端到端：撞墙结束一局 → 自动追加战绩、最高分/上一局不清零 */
+      resetStatsSilent(JSON.parse(snapshot));
+      var wasHi=stats.hi, wasRounds=stats.rounds;
+      snake=[{x:1,y:1},{x:1,y:2}]; dir={x:-1,y:0}; queue=[]; score=(wasHi>0?wasHi-5:55); level=1;
+      state='playing'; step();                            /* 撞墙 → die() */
+      var lastRec=stats.history[stats.history.length-1];
+      var ok13=stats.rounds===wasRounds+1 && stats.last===score && lastRec && lastRec.score===score;
+      var ok14=stats.hi===Math.max(wasHi,score) && !document.getElementById('ov-over').classList.contains('hidden')
+             && document.getElementById('final-score').textContent===String(score);
+      resetStatsSilent(JSON.parse(snapshot));              /* 还原测试前的记录 */
+      hide('ov-over'); state='paused';
+      /* 模拟「刷新」：存储里已有 23 局，重新读取并渲染，检查看到的就是最近 10 局 */
+      var seedHistory=[];
+      for(var ri=1;ri<=23;ri++){
+        seedHistory.push({n:ri,score:50+ri*7,level:1+Math.floor(ri/5),len:3+ri,time:1755000000000+ri*60000});
+      }
+      try{ localStorage.setItem(STATS_KEY,JSON.stringify({hi:211,last:120,rounds:23,history:seedHistory})); }catch(e){}
+      var ok15=(function(){ try{ localStorage.setItem(THEME_KEY,'light'); }catch(e){}
+                            return initThemeFromStorage()==='light'
+                                && document.documentElement.getAttribute('data-theme')==='light'
+                                && PAL===PALETTES.light; })();            /* 刷新后读回所选主题 */
+      loadStats(); renderStats(); renderRecords();                     /* 刷新后读回战绩 */
+      var nRecent=document.querySelectorAll('#rec-list .rec-item').length;
+      var nAll=document.querySelectorAll('#rec-list-all .rec-item').length;
+      var firstRow=document.querySelector('#rec-list .rec-item');
+      var firstTxt=firstRow?firstRow.textContent:'';
+      var bestCount=document.querySelectorAll('#rec-list .rec-item.best').length;
+      var topOk=firstTxt.indexOf('#23')>=0 && firstTxt.indexOf('211')>=0;   /* 最新一局排在最上面 */
+      var ok16=stats.rounds===23 && document.getElementById('hi').textContent==='211'
+             && nRecent===10 && nAll===23 && topOk && bestCount===1;      /* 面板 10 局 / 完整列表 23 局 */
+      resetStatsSilent(JSON.parse(snapshot));                          /* 还原测试前的记录 */
+      applyTheme(prevTheme);
+      var pass=ok1&&ok2&&ok3&&ok4&&ok5&&ok6&&ok7&&ok8&&ok9&&ok10&&ok11&&ok12&&ok13&&ok14&&ok15&&ok16;
+      document.title=(pass?'AUTOTEST-PASS':'AUTOTEST-FAIL '+[ok1,ok2,ok3,ok4,ok5,ok6,ok7,ok8,ok9,ok10,ok11,ok12,ok13,ok14,ok15,ok16].map(String).join(''))
+                    +' recent='+nRecent+' all='+nAll+' top='+(topOk?'ok':'bad')+' best='+bestCount;
     }catch(err){
       document.title='AUTOTEST-EXC '+err.message;
     }
